@@ -1,0 +1,7 @@
+steps:
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['build', '-t', 'gcr.io/durable-circle-433106-g9/my-app', '.']
+images:
+- 'gcr.io/durable-circle-433106-g9/my-app'
+options:
+  logging: 'CLOUD_LOGGING_ONLY'
