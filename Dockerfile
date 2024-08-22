@@ -15,3 +15,6 @@ COPY . .
 
 # Expose port 8080.
 EXPOSE 80
+
+# Start the application.
+CMD ["node", "myappsql.js"]
