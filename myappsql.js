@@ -22,12 +22,35 @@
 
 const express = require('express');
 const app = express();
-const port = process.env.PORT || 81;
+const port = process.env.PORT || 3000;
+
+require('dotenv').config();
+const { Client } = require('pg'); // For PostgreSQL
+
+// const app = express();
+// const port = process.env.PORT || 3000;
+
+const client = new Client({
+  host: process.env.DB_HOST,
+  port: process.env.DB_PORT,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME
+});
+
+client.connect()
+  .then(() => console.log('Connected to Cloud SQL'))
+  .catch(err => console.error('Connection error', err.stack));
+
+app.listen(port, () => {
+  console.log(`Server running on port ${port}`);
+});
+
 
 app.get('/', (req, res) => {
   res.send('Hello, World!');
 });
 
-app.listen(port, () => {
-  console.log(`Server running on http://localhost:${port}`);
-});
+// app.listen(port, () => {
+//   console.log(`Server running on http://localhost:${port}`);
+// });
