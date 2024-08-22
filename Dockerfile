@@ -14,7 +14,7 @@ RUN npm install
 COPY . .
 
 # Expose port 8080.
-EXPOSE 80
+EXPOSE 8081
 
 # Start the application.
 CMD ["node", "myappsql.js"]
