@@ -1,56 +1,39 @@
-// const mysql = require('mysql2/promise');
+const mysql = require('mysql2');
 
-// async function main() {
-//     const pool = mysql.createPool({
-//         socketPath: '/cloudsql/durable-circle-433106-g9:us-central1:spacevote-instance', // Ensure this path is correct
-//         user: 'prema', // Use environment variables for sensitive information
-//         password: 'Admin@123', // Use environment variables for sensitive information
-//         database: 'votecast' // Use environment variables for sensitive information
-//     });
+// Replace these with your details
+const dbUser = "prema";
+const dbPassword = "Admin@123";
+const dbName = "votecast";
+const host = "34.134.153.25";
 
-//     try {
-//         const [rows, fields] = await pool.query('SELECT * FROM vote_table');
-//         console.log('Query results:', rows);
-//     } catch (err) {
-//         console.error('Error executing query:', err.stack);
-//     } finally {
-//         await pool.end();
-//     }
-// }
-
-// main();
-
-const express = require('express');
-const app = express();
-const port = process.env.PORT || 3000;
-
-require('dotenv').config();
-const { Client } = require('pg'); // For PostgreSQL
-
-// const app = express();
-// const port = process.env.PORT || 3000;
-
-const client = new Client({
-  host: process.env.DB_HOST,
-  port: process.env.DB_PORT,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_NAME
+// Create a connection to the database
+const connection = mysql.createConnection({
+  host: host,
+  user: dbUser,
+  password: dbPassword,
+  database: dbName
 });
 
-client.connect()
-  .then(() => console.log('Connected to Cloud SQL'))
-  .catch(err => console.error('Connection error', err.stack));
+// SQL INSERT query
+const insertQuery = "INSERT INTO vote_table (tabvote, spacevote) VALUES (?, ?)";
+const data = [1, 1];
 
-app.listen(port, () => {
-  console.log(`Server running on port ${port}`);
+connection.connect((err) => {
+  if (err) {
+    console.error('Error connecting to the database:', err);
+    return;
+  }
+  console.log('Connected to the database');
+
+  // Execute the INSERT command
+  connection.query(insertQuery, data, (error, results) => {
+    if (error) {
+      console.error('Error executing query:', error);
+      return;
+    }
+    console.log('Inserted row ID:', results.insertId);
+
+    // Close the connection
+    connection.end();
+  });
 });
-
-
-app.get('/', (req, res) => {
-  res.send('Hello, World!');
-});
-
-// app.listen(port, () => {
-//   console.log(`Server running on http://localhost:${port}`);
-// });
