@@ -5,7 +5,7 @@ const { Storage } = require('@google-cloud/storage');
 const path = require('path');
 const cors = require('cors');
 const app = express();
-const port = process.env.PORT || 8080; // Cloud Run typically uses port 8080
+const port = process.env.PORT || 80; // Cloud Run typically uses port 80
 
 // Replace these with your details
 const dbUser = "prema";
