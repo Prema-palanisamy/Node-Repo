@@ -1,10 +1,62 @@
 const mysql = require('mysql2');
+const express = require('express');
+const multer = require('multer');
+const { Storage } = require('@google-cloud/storage');
+const path = require('path');
+const cors = require('cors');
+const app = express();
+const port = process.env.PORT || 8080; // Cloud Run typically uses port 8080
 
 // Replace these with your details
 const dbUser = "prema";
 const dbPassword = "Admin@123";
 const dbName = "votecast";
 const host = "34.134.153.25";
+
+
+// Create a storage client here
+const storage = new Storage({
+  keyFilename: 'D:config.json', // Replace with the path to your service account key file
+});
+
+const bucketName = 'my-project1-loadfile-storage'; // Replace with your bucket name
+const bucket = storage.bucket(bucketName);
+
+const upload = multer({
+  storage: multer.memoryStorage(),
+  limits: { fileSize: 10 * 1024 * 1024 }, // 10 MB
+});
+
+
+app.use(cors({
+    origin: 'http://localhost:4200' // Replace with your Angular app's URL
+  }));
+
+app.post('/upload', upload.single('file'), (req, res) => {
+    console.log("post", req.file)
+  if (!req.file) {
+    return res.status(400).send('No file uploaded.');
+  }
+
+  const blob = bucket.file(req.file.originalname);
+  const blobStream = blob.createWriteStream({
+    metadata: {
+      contentType: req.file.mimetype,
+    },
+  });
+
+  blobStream.on('error', (err) => {
+    console.log("error");
+    res.status(500).send(err);
+  });
+
+  blobStream.on('finish', () => {
+    console.log("finish");
+    res.status(200).send({success : 'File uploaded successfully.'});
+  });
+
+  blobStream.end(req.file.buffer);
+});
 
 // Create a connection to the database
 const connection = mysql.createConnection({
@@ -17,10 +69,6 @@ const connection = mysql.createConnection({
 // SQL INSERT query
 const insertQuery = "INSERT INTO vote_table (tabvote, spacevote) VALUES (?, ?)";
 
-
-const express = require('express');
-const app = express();
-const port = process.env.PORT || 8080; // Cloud Run typically uses port 8080
 
 app.get('/', (req, res) => {
   const i1 = req.query.tabvote || 100; // Default to 'Guest' if name is not provided
