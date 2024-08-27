@@ -1,4 +1,4 @@
-const mysql = require('mysql2');
+const mysql = require('mysql2'); //mysql
 const express = require('express');
 const multer = require('multer');
 const { Storage } = require('@google-cloud/storage');
