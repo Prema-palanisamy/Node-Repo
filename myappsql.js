@@ -8,10 +8,10 @@ const app = express();
 const port = process.env.PORT || 8080; // Cloud Run typically uses port 80
 
 // Replace these with your details
-const dbUser = "prema";
+const dbUser = "Prema";
 const dbPassword = "Admin@123";
 const dbName = "votecast";
-const host = "34.134.153.25";
+const host = "35.226.63.141"; 
 
 
 // Create a storage client - code here added
@@ -28,9 +28,9 @@ const upload = multer({
 });
 
 
-// app.use(cors({
-//     origin: 'http://localhost:4200' // Replace with your Angular app's URL
-//   }));
+app.use(cors({
+    origin: 'http://localhost:4200' // Replace with your Angular app's URL
+  }));
 
 app.post('/upload', upload.single('file'), (req, res) => {
     console.log("post", req.file)
