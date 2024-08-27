@@ -106,24 +106,24 @@
 const express = require('express');
 const app = express();
 const port = process.env.PORT || 8080;
-const mysql = require('mysql2');
+// const mysql = require('mysql2');
 // const multer = require('multer');
 // const { Storage } = require('@google-cloud/storage');
 // const path = require('path');
 
 // Replace these with your details
-const dbUser = "Prema";
-const dbPassword = "Admin@123";
-const dbName = "votecast";
-const host = "35.226.63.141"; 
+// const dbUser = "Prema";
+// const dbPassword = "Admin@123";
+// const dbName = "votecast";
+// const host = "35.226.63.141"; 
 
 // Create a connection to the database
-const connection = mysql.createConnection({
-  host: host,
-  user: dbUser,
-  password: dbPassword,
-  database: dbName,
-});
+// const connection = mysql.createConnection({
+//   host: host,
+//   user: dbUser,
+//   password: dbPassword,
+//   database: dbName,
+// });
 
 app.get('/',(req, res) => {
   //   connection.connect((err) => {
