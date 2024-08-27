@@ -28,9 +28,9 @@
 // });
 
 
-// // app.use(cors({
-// //     origin: 'http://localhost:4200' // Replace with your Angular app's URL
-// //   }));
+// app.use(cors({
+//     origin: 'http://localhost:4200' // Replace with your Angular app's URL
+//   }));
 
 // app.post('/upload', upload.single('file'), (req, res) => {
 //     console.log("post", req.file)
@@ -107,9 +107,9 @@ const express = require('express');
 const app = express();
 const port = process.env.PORT || 8080;
 const mysql = require('mysql2');
-const multer = require('multer');
-const { Storage } = require('@google-cloud/storage');
-const path = require('path');
+// const multer = require('multer');
+// const { Storage } = require('@google-cloud/storage');
+// const path = require('path');
 
 // Replace these with your details
 const dbUser = "Prema";
@@ -122,17 +122,17 @@ const connection = mysql.createConnection({
   host: host,
   user: dbUser,
   password: dbPassword,
-  database: dbName
+  database: dbName,
 });
 
 app.get('/',(req, res) => {
-    connection.connect((err) => {
-    if (err) {
-      console.error('Error connecting to the database:', err);
-      return;
-    }
-    console.log('Connected to the database');
-  })
+  //   connection.connect((err) => {
+  //   if (err) {
+  //     console.error('Error connecting to the database:', err);
+  //     return;
+  //   }
+  //   console.log('Connected to the database');
+  // })
   res.send("file detected successfully")
 })
 app.listen(port, () => {
