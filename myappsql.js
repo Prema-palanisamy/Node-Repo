@@ -58,7 +58,7 @@ const host = "35.226.63.141";
 //   blobStream.end(req.file.buffer);
 // });
 
-Create a connection to the database
+// Create a connection to the database
 const connection = mysql.createConnection({
   host: host,
   user: dbUser,
