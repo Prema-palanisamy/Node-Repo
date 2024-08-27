@@ -128,7 +128,7 @@ const connection = mysql.createConnection({
 app.get('/',(req, res) => {
     connection.connect((err) => {
     if (err) {
-      console.error('Error connecting to the database:', err);
+      res.send('Error connecting to the database:', err);
       return;
     }
     res.send('Connected to the database');
