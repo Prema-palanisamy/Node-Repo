@@ -5,7 +5,7 @@ const { Storage } = require('@google-cloud/storage');
 const path = require('path');
 const cors = require('cors');
 const app = express();
-const port = process.env.PORT || 80; // Cloud Run typically uses port 80
+const port = process.env.PORT || 8080; // Cloud Run typically uses port 80
 
 // Replace these with your details
 const dbUser = "prema";
@@ -28,9 +28,9 @@ const upload = multer({
 });
 
 
-app.use(cors({
-    origin: 'http://localhost:4200' // Replace with your Angular app's URL
-  }));
+// app.use(cors({
+//     origin: 'http://localhost:4200' // Replace with your Angular app's URL
+//   }));
 
 app.post('/upload', upload.single('file'), (req, res) => {
     console.log("post", req.file)
