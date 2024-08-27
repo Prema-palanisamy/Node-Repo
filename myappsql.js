@@ -131,9 +131,9 @@ app.get('/',(req, res) => {
       console.error('Error connecting to the database:', err);
       return;
     }
-    console.log('Connected to the database');
+    res.send('Connected to the database');
   })
-  res.send("file detected successfully")
+  // res.send("file detected successfully")
 })
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
