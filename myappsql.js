@@ -107,6 +107,9 @@ const express = require('express');
 const app = express();
 const port = process.env.PORT || 8080;
 const mysql = require('mysql2');
+const multer = require('multer');
+const { Storage } = require('@google-cloud/storage');
+const path = require('path');
 
 // Replace these with your details
 const dbUser = "Prema";
