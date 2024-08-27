@@ -59,43 +59,43 @@ app.post('/upload', upload.single('file'), (req, res) => {
 });
 
 // Create a connection to the database
-const connection = mysql.createConnection({
-  host: host,
-  user: dbUser,
-  password: dbPassword,
-  database: dbName
-});
+// const connection = mysql.createConnection({
+//   host: host,
+//   user: dbUser,
+//   password: dbPassword,
+//   database: dbName
+// });
 
-// SQL INSERT query
-const insertQuery = "INSERT INTO vote_table (tabvote, spacevote) VALUES (?, ?)";
+// // SQL INSERT query
+// const insertQuery = "INSERT INTO vote_table (tabvote, spacevote) VALUES (?, ?)";
 
 
-app.get('/', (req, res) => {
-  const i1 = req.query.tabvote || 104; // Default to 'Guest' if name is not provided
-  const i2 = req.query.spacevote || 105;
-  const data = [i1,i2];
-  connection.connect((err) => {
-    if (err) {
-      console.error('Error connecting to the database:', err);
-      return;
-    }
-    console.log('Connected to the database');
+// app.get('/', (req, res) => {
+//   const i1 = req.query.tabvote || 104; // Default to 'Guest' if name is not provided
+//   const i2 = req.query.spacevote || 105;
+//   const data = [i1,i2];
+//   connection.connect((err) => {
+//     if (err) {
+//       console.error('Error connecting to the database:', err);
+//       return;
+//     }
+//     console.log('Connected to the database');
   
-    // Execute the INSERT command
-    connection.query(insertQuery, data, (error, results) => {
-      if (error) {
-        console.error('Error executing query:', error);
-        return;
-      }
-      console.log('Inserted row ID:', results.insertId);
+//     // Execute the INSERT command
+//     connection.query(insertQuery, data, (error, results) => {
+//       if (error) {
+//         console.error('Error executing query:', error);
+//         return;
+//       }
+//       console.log('Inserted row ID:', results.insertId);
   
-      // Close the connection
-      connection.end();
-    });
-  });
+//       // Close the connection
+//       connection.end();
+//     });
+  // });
 
-  res.send(` ${i1} are ${i2} Saved.`);
-});
+  // res.send(` ${i1} are ${i2} Saved.`);
+// });
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
