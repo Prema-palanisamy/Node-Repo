@@ -112,13 +112,28 @@ const { Storage } = require('@google-cloud/storage');
 const path = require('path');
 const cors = require('cors')
 
-app.get('/',(req, res) => {
-  const storage = new Storage({
-  keyFilename: 'D:config.json', // Replace with the path to your service account key file
+// Replace these with your details
+const dbUser = "Prema";
+const dbPassword = "Admin@123";
+const dbName = "votecast";
+const host = "35.226.63.141"; 
+
+// Create a connection to the database
+const connection = mysql.createConnection({
+  host: host,
+  user: dbUser,
+  password: dbPassword,
+  database: dbName
 });
 
-const bucketName = 'my-project1-loadfile-storage'; // Replace with your bucket name
-const bucket = storage.bucket(bucketName);
+app.get('/',(req, res) => {
+    connection.connect((err) => {
+    if (err) {
+      console.error('Error connecting to the database:', err);
+      return;
+    }
+    console.log('Connected to the database');
+  })
   res.send("file detected successfully")
 })
 app.listen(port, () => {
