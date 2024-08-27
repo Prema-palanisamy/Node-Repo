@@ -15,48 +15,48 @@ const host = "35.226.63.141";
 
 
 // Create a storage client - code here added
-// const storage = new Storage({
-//   keyFilename: 'D:config.json', // Replace with the path to your service account key file
-// });
+const storage = new Storage({
+  keyFilename: 'D:config.json', // Replace with the path to your service account key file
+});
 
-// const bucketName = 'my-project1-loadfile-storage'; // Replace with your bucket name
-// const bucket = storage.bucket(bucketName);
+const bucketName = 'my-project1-loadfile-storage'; // Replace with your bucket name
+const bucket = storage.bucket(bucketName);
 
-// const upload = multer({
-//   storage: multer.memoryStorage(),
-//   limits: { fileSize: 10 * 1024 * 1024 }, // 10 MB
-// });
+const upload = multer({
+  storage: multer.memoryStorage(),
+  limits: { fileSize: 10 * 1024 * 1024 }, // 10 MB
+});
 
 
 // app.use(cors({
 //     origin: 'http://localhost:4200' // Replace with your Angular app's URL
 //   }));
 
-// app.post('/upload', upload.single('file'), (req, res) => {
-//     console.log("post", req.file)
-//   if (!req.file) {
-//     return res.status(400).send('No file uploaded.');
-//   }
+app.post('/upload', upload.single('file'), (req, res) => {
+    console.log("post", req.file)
+  if (!req.file) {
+    return res.status(400).send('No file uploaded.');
+  }
 
-//   const blob = bucket.file(req.file.originalname);
-//   const blobStream = blob.createWriteStream({
-//     metadata: {
-//       contentType: req.file.mimetype,
-//     },
-//   });
+  const blob = bucket.file(req.file.originalname);
+  const blobStream = blob.createWriteStream({
+    metadata: {
+      contentType: req.file.mimetype,
+    },
+  });
 
-//   blobStream.on('error', (err) => {
-//     console.log("error");
-//     res.status(500).send(err);
-//   });
+  blobStream.on('error', (err) => {
+    console.log("error");
+    res.status(500).send(err);
+  });
 
-//   blobStream.on('finish', () => {
-//     console.log("finish");
-//     res.status(200).send({success : 'File uploaded successfully.'});
-//   });
+  blobStream.on('finish', () => {
+    console.log("finish");
+    res.status(200).send({success : 'File uploaded successfully.'});
+  });
 
-//   blobStream.end(req.file.buffer);
-// });
+  blobStream.end(req.file.buffer);
+});
 
 // Create a connection to the database
 const connection = mysql.createConnection({
