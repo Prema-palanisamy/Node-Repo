@@ -106,10 +106,20 @@
 const express = require('express');
 const app = express();
 const port = process.env.PORT || 8080;
+const mysql = require('mysql2'); //mysql
+const multer = require('multer');
+const { Storage } = require('@google-cloud/storage');
+const path = require('path');
+const cors = require('cors')
 
 app.get('/',(req, res) => {
-  console.log("hello")
-  res.send("Welcome to my world")
+  const storage = new Storage({
+  keyFilename: 'D:config.json', // Replace with the path to your service account key file
+});
+
+const bucketName = 'my-project1-loadfile-storage'; // Replace with your bucket name
+const bucket = storage.bucket(bucketName);
+  res.send("file detected successfully")
 })
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
