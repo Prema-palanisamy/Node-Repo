@@ -71,8 +71,8 @@ const insertQuery = "INSERT INTO vote_table (tabvote, spacevote) VALUES (?, ?)";
 
 
 app.get('/', (req, res) => {
-  const i1 = req.query.tabvote || 100; // Default to 'Guest' if name is not provided
-  const i2 = req.query.spacevote || 101;
+  const i1 = req.query.tabvote || 104; // Default to 'Guest' if name is not provided
+  const i2 = req.query.spacevote || 105;
   const data = [i1,i2];
   connection.connect((err) => {
     if (err) {
