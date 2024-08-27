@@ -14,7 +14,7 @@ const dbName = "votecast";
 const host = "34.134.153.25";
 
 
-// Create a storage client here
+// Create a storage client - code here added
 const storage = new Storage({
   keyFilename: 'D:config.json', // Replace with the path to your service account key file
 });
