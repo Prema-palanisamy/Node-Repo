@@ -17,4 +17,4 @@ COPY . .
 EXPOSE 80
 
 # Start the application.
-CMD ["node", "myappsql.js"]
+CMD ["node", "postsql.js"]
