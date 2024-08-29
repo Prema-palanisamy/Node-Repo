@@ -4,6 +4,7 @@ const express = require('express');
 const app = express();
 const port = process.env.PORT || 8080; 
 const cors = require('cors');
+const logger = require('./logger');
 
 const client = new Client({
   connectionString: process.env.DATABASE_URL,
@@ -11,10 +12,6 @@ const client = new Client({
     rejectUnauthorized: false, // This is necessary for Cloud SQL
   },
 });
-
-// client.connect()
-//   .then(() => console.log('Connected to PostgreSQL'))
-//   .catch(err => console.error('Connection error', err.stack));
 
   async function setupDatabase() {
     try {
@@ -65,6 +62,7 @@ app.use(cors({
         // const selectQuery = 'SELECT * FROM vote_table;'
         // const res = await client.query(selectQuery)
       const result = await client.query('SELECT * FROM vote_table;');
+      logger.info('Received a request to node');
       console.table(result.rows);
       res.json(result.rows);
     } catch (err) {
@@ -73,7 +71,8 @@ app.use(cors({
     }
   });
 
+logger.info('Application has started');
+
   app.listen(port, () => {
     console.log(`Server running on port ${port}`);
   });
-// Use client.query() to execute SQL queries
