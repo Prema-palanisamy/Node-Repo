@@ -1,9 +1,9 @@
 steps:
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['build', '-t', 'gcr.io/my-project-1-433804/nod-app:latest', '.']
+  args: ['build', '-t', 'gcr.io/coral-style-433606-t0/nod-app:latest', '.']
 
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['push', 'gcr.io/my-project-1-433804/nod-app:latest']
+  args: ['push', 'gcr.io/coral-style-433606-t0/nod-app:latest']
 
 - name: 'gcr.io/cloud-builders/gcloud'
   args:
@@ -11,7 +11,7 @@ steps:
   - 'deploy'
   - 'nod-app'
   - '--image'
-  - 'gcr.io/my-project-1-433804/nod-app:latest'
+  - 'gcr.io/coral-style-433606-t0/nod-app:latest'
   - '--platform'
   - 'managed'
   - '--region'
@@ -19,7 +19,7 @@ steps:
   - '--allow-unauthenticated'
 
 images:
-- 'gcr.io/my-project-1-433804/nod-app:latest'
+- 'gcr.io/coral-style-433606-t0/nod-app:latest'
 
 options:
   default_logs_bucket_behavior: REGIONAL_USER_OWNED_BUCKET
