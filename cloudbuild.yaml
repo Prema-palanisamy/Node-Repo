@@ -1,25 +1,32 @@
+# steps:
+# - name: 'gcr.io/cloud-builders/docker'
+#   args: ['build', '-t', 'gcr.io/coral-style-433606-t0/nod-app:latest', '.']
+
+# - name: 'gcr.io/cloud-builders/docker'
+#   args: ['push', 'gcr.io/coral-style-433606-t0/nod-app:latest']
+
+# - name: 'gcr.io/cloud-builders/gcloud'
+#   args:
+#   - 'run'
+#   - 'deploy'
+#   - 'nod-app'
+#   - '--image'
+#   - 'gcr.io/coral-style-433606-t0/nod-app:latest'
+#   - '--platform'
+#   - 'managed'
+#   - '--region'
+#   - 'us-central1'
+#   - '--allow-unauthenticated'
+
+# images:
+# - 'gcr.io/coral-style-433606-t0/nod-app:latest'
+
+# options:
+#   default_logs_bucket_behavior: REGIONAL_USER_OWNED_BUCKET
+
 steps:
-- name: 'gcr.io/cloud-builders/docker'
-  args: ['build', '-t', 'gcr.io/coral-style-433606-t0/nod-app:latest', '.']
-
-- name: 'gcr.io/cloud-builders/docker'
-  args: ['push', 'gcr.io/coral-style-433606-t0/nod-app:latest']
-
 - name: 'gcr.io/cloud-builders/gcloud'
   args:
-  - 'run'
+  - 'app'
   - 'deploy'
-  - 'nod-app'
-  - '--image'
-  - 'gcr.io/coral-style-433606-t0/nod-app:latest'
-  - '--platform'
-  - 'managed'
-  - '--region'
-  - 'us-central1'
-  - '--allow-unauthenticated'
-
-images:
-- 'gcr.io/coral-style-433606-t0/nod-app:latest'
-
-options:
-  default_logs_bucket_behavior: REGIONAL_USER_OWNED_BUCKET
+  - '--quiet'
