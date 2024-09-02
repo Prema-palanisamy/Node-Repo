@@ -4,14 +4,16 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node myappsql.js",
+    "start": "node postsql.js",
     "build": "ng build",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "nodemon": "postsql.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@google-cloud/pubsub": "^4.7.0",
     "@google-cloud/storage": "^7.12.1",
     "body-parser": "^1.20.2",
     "cors": "^2.8.5",
@@ -22,6 +24,7 @@
     "mysql2": "^3.11.0",
     "nodemon": "^3.1.4",
     "pg": "^8.12.0",
+    "PubSub": "^4.0.0",
     "winston": "^3.14.2"
   }
 }
