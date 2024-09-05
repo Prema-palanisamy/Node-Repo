@@ -8,12 +8,39 @@ const cors = require('cors');
 const logger = require('./logger');
 const pubsub = new PubSub();
 const topicName = 'my-topic'; 
+const multer = require('multer');
+const { SecretManagerServiceClient } = require("@google-cloud/secret-manager");
 
 const client = new Client({
   connectionString: process.env.DATABASE_URL,
   ssl: {
     rejectUnauthorized: false, // This is necessary for Cloud SQL
   },
+});
+const secretClient = new SecretManagerServiceClient();
+
+async function getCredentials() {
+  const [version] = await secretClient.accessSecretVersion({
+    name: "projects/794505579581/secrets/node-secret1/versions/2", // Replace with your secret name 
+  });
+  const payload = version.payload.data.toString("utf8");
+  return JSON.parse(payload);
+}
+ 
+// Function to initialize Google Cloud Storage with credentials from Secret Manager
+async function initializeStorage() {
+  const credentials = await getCredentials();
+  const storage = new Storage({
+    projectId: "coral-style-433606-t0",
+    credentials,
+  });
+  return storage.bucket("upload-node-angular");
+}
+ 
+
+const upload = multer({
+  storage: multer.memoryStorage(),
+  limits: { fileSize: 10 * 1024 * 1024 }, // 10 MB
 });
 
 async function publishMessage() {
@@ -117,6 +144,33 @@ app.put('/delete', async (req, res) => {
     console.error('Error deleting data:', error);
     res.status(500).json({ error: 'Internal Server Error' });
   }
+});
+
+app.post('/file', upload.single('file'), async (req, res) => {
+    console.log("post", req.file)
+  if (!req.file) {
+    return res.status(400).send('No file uploaded.');
+  }
+
+  const bucket = await initializeStorage();
+    console.log("File found, trying to upload...");
+ 
+    const blob = bucket.file(req.file.originalname);
+    const blobStream = blob.createWriteStream({
+      resumable: false,
+    });
+
+  blobStream.on('error', (err) => {
+    console.log("error");
+    res.status(500).send(err);
+  });
+
+  blobStream.on('finish', () => {
+    console.log("finish");
+    res.status(200).send({success : 'File uploaded successfully.'});
+  });
+
+  blobStream.end(req.file.buffer);
 });
 
   app.listen(port, () => {
